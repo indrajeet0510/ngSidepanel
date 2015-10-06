@@ -1,0 +1,35 @@
+{
+  "name": "ngSidepanel",
+  "version": "0.1",
+  "authors": [
+    "indrajeet (indrajeet0510@hotmail.com)"
+  ],
+  "description": "Angular Sidepanel is a sidepanel based on angular ui components",
+  "main": [
+	"./dist/ngSidepanel.js",
+	"./dist/ngSidepanel.css"
+  ],
+  "keywords": [
+    "sidepanel",
+    "angular",
+	"angular-ui",
+    "ngsidepanel",
+    "ui-sidepanel",
+    "ui",
+    "sidepanel",
+	"indrajeet"
+  ],
+  "dependencies": {
+	"jquery" : ">=2.1.x",
+    "angular": ">=1.3.x"
+  },
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

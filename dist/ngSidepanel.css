@@ -1,0 +1,20 @@
+.ng-sidepanel-container{
+    position: absolute;
+    top:0;
+    left:0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1500;
+	margin: 0px;
+	padding: 0px;
+}
+
+.ng-sidepanel{
+    float: right;
+    top:0;
+    height: 100%;
+    width: 0%;
+    background: #FFFFFF;
+    opacity: 1;
+}
