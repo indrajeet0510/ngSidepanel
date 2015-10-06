@@ -6,6 +6,8 @@ Angular Sidepanel
 
 ```
 bower install ngSidepanel
+
+bower install ngSidepanel --save
 ```
 
 ## Usage
@@ -93,5 +95,17 @@ bower install ngSidepanel
 			};
 		}]);
 
+
+```
+### views/test-sidepanel.html
+
+```
+
+	<h3>Panel Title : {{panelTitle}} </h3>
+	<div class="form-group form-group-sm">
+		<input type="text" class="form-control" ng-model="panelName" type="text" placeholder="Panel Name" />
+	</div>
+	<button class="btn btn-sm btn-primary" ng-click="closePanel()">Close</button>
+	<button class="btn btn-sm btn-danger" ng-click="dismissPanel()">Dismiss</button>
 
 ```
