@@ -109,3 +109,11 @@ bower install ngSidepanel --save
 	<button class="btn btn-sm btn-danger" ng-click="dismissPanel()">Dismiss</button>
 
 ```
+
+## Licensing
+
+Licensed under [MIT](http://opensource.org/licenses/MIT)
+
+## Author
+
+2015, Indra Jeet [www.twitter.com/indrajeet0510](http://www.twitter.com/indrajeet0510)
