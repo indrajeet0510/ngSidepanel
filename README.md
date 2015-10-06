@@ -4,7 +4,9 @@ Angular Sidepanel
 
 ## Install
 
+```
 bower install ngSidepanel
+```
 
 ## Usage
 
