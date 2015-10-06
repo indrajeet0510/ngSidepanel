@@ -1,0 +1,2 @@
+# ngSidepanel
+Angular Sidepanel 
