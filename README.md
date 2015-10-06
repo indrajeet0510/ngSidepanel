@@ -10,6 +10,46 @@ bower install ngSidepanel
 
 ## Usage
 
+### index.html
+
+```
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>ngSidepanel Demo</title>
+		<meta name="description" content="ngSidepanel : AngularJS directive  for sidepanel" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="bower_components/ngSidepanel/dist/ngSidepanel.css" />
+		<style>
+			.bg-blue{
+				background : #0AB5F7;
+			}
+		</style>
+		
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+		<script type="text/javascript" src="bower_components/ngSidepanel/dist/ngSidepanel.js"></script>
+		<script type="text/javascript" src="app.js"></script>
+	</head>
+	<body ng-app="testApp">
+		<div class="container-fluid">
+			<div class="row" ng-controller="testController">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<h1>Title : {{title}} </h1>
+					<h4>Name : {{name}}</h4>
+					<button class="btn btn-default btn-sm" ng-click="openSidepanel()">Open Sidepanel</button>
+				</div>
+
+			</div>
+		</div>
+	</body>
+</html>
+
+```
+
+### app.js
+
 ```
 		var testApp = angular.module('testApp',['ngSidepanel']);
 		testApp.controller('testController',['$scope','$sidepanel','$window',function($scope,$sidepanel,$window){
