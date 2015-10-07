@@ -17,4 +17,5 @@
     width: 0%;
     background: #FFFFFF;
     opacity: 1;
+    overflow-y : scroll;
 }
