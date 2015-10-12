@@ -55,7 +55,6 @@
 						}, 400,function(){
 
 						});
-
 					}
 				});
 			}
@@ -105,6 +104,7 @@
 					controller : null,
 					position : 'right',
 					width : '20%',
+                    height : '90%',
 					panelClass : '',
 					resolve : null
 				};
@@ -113,7 +113,7 @@
 						if(options.hasOwnProperty(prop) && defaultOptions.hasOwnProperty(prop) !== -1){
 							if(options[prop]){
 
-								if(prop == 'position' && ['right','left'].indexOf(options[prop].toLowerCase()) == -1){
+								if(prop == 'position' && ['right','left','top','bottom'].indexOf(options[prop].toLowerCase()) == -1){
 									defaultOptions[prop] = 'right';
 								}
 								else{
