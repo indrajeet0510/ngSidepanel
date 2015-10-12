@@ -30,9 +30,9 @@
                     + '</'+'div>';
             }
 
+            angular.element('body').append(htmlString);
 
 			if(isVertical){
-				angular.element('body').append(htmlString);
 				angular.element(window).resize(function() {
 					var _w = angular.element( window ).width();
 					var _h = angular.element( window ).height();
