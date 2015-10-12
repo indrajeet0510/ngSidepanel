@@ -6,15 +6,59 @@
 		return function(template,controllerName,width,position,cssClass){
 			var sidepanelId = 'sidepanel-' + count;
 			count += 1;
-			var htmlString = '<div id="' +sidepanelId+ '" class="ng-sidepanel-container" '
-				+ ((controllerName) ? ('ng-controller="' +controllerName + '" ') : '') +' >'
-				+ '<div class="ng-sidepanel '+ ((cssClass) ? cssClass : '') +
-				'>" style="float:'+ position +'; width:'+ '0%' +'"'
-				+ template
-				+ '</' + 'div>'
-				+ '</'+'div>';
 
-			angular.element('body').append(htmlString);
+
+			var htmlString = '';
+			var isVertical = false;
+			if(position == 'left' || position == 'right'){
+				isVertical = true;
+				htmlString = '<div id="' +sidepanelId+ '" class="ng-sidepanel-container" '
+					+ ((controllerName) ? ('ng-controller="' +controllerName + '" ') : '') +' >'
+					+ '<div class="ng-sidepanel '+position + ' '+ ((cssClass) ? cssClass : '') +
+					'>" style="width:'+ '0%' +'"'
+					+ template
+					+ '</' + 'div>'
+					+ '</'+'div>';
+			}
+            else{
+                htmlString = '<div id="' +sidepanelId+ '" class="ng-sidepanel-container" '
+                    + ((controllerName) ? ('ng-controller="' +controllerName + '" ') : '') +' >'
+                    + '<div class="ng-sidepanel '+position + ' '+ ((cssClass) ? cssClass : '') +
+                    '>" style="height:'+ '0%' +'"'
+                    + template
+                    + '</' + 'div>'
+                    + '</'+'div>';
+            }
+
+
+			if(isVertical){
+				angular.element('body').append(htmlString);
+				angular.element(window).resize(function() {
+					var _w = angular.element( window ).width();
+					var _h = angular.element( window ).height();
+
+					// Do a custom code here
+
+					if(_w <= 480){
+						angular.element('#'+sidepanelId+' > .ng-sidepanel.left').animate({
+							width : '95%'
+						}, 400,function(){
+
+						});
+
+					}
+
+					// Do a custom code here
+					if(_w > 480){
+						angular.element('#'+sidepanelId+' > .ng-sidepanel.left').animate({
+							width : width
+						}, 400,function(){
+
+						});
+
+					}
+				});
+			}
 			return sidepanelId;
 		};
 	}]);
@@ -111,24 +155,29 @@
 			};
 			this.open = function(panelOptions){
 				var parsedOptions = $parseSidepanelOptions(panelOptions);
-				if(!parsedOptions.template){
+                var animateProp = { height : '0%'};
+                var animatePropFinal = { height : parsedOptions.height};
+                if(panelOptions.position == 'right' || panelOptions.position == 'left'){
+                    animateProp = { width : '0%'};
+                    animatePropFinal = { width : parsedOptions.width};
+                }
+                if(!parsedOptions.template){
 					$getSidepanelTemplate(parsedOptions.templateUrl).then(function(data){
 						var sidePanelId = $parseSidepanelHtml(data,parsedOptions.controller,parsedOptions.width,parsedOptions.position,parsedOptions.panelClass);
-						var ctrlDi = {
+
+
+
+                        var ctrlDi = {
 							$scope : $rootScope.$new(),
 							$sidepanelInstance : {
 								close : function(data){
-									angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate({
-										width : '0%'
-									}, 400,function(){
+                                    angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate(animateProp, 400,function(){
 										angular.element('#'+sidePanelId).remove();
 										defer.resolve(data);
 									});
 								},
 								dismiss : function(cause){
-									angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate({
-										width : '0%'
-									}, 400,function(){
+									angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate(animateProp, 400,function(){
 										angular.element('#'+sidePanelId).remove();
 										defer.reject(cause);
 									});
@@ -152,9 +201,7 @@
 						}
 						$compile(angular.element('#'+sidePanelId).contents())(ctrlDi.$scope);
 						$timeout(function(){
-							angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate({
-								width : parsedOptions.width
-							}, 400,function(){
+							angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate(animatePropFinal, 400,function(){
 							});
 						},200);
 
@@ -174,9 +221,7 @@
 						$sidepanelInstance : {
 							close : function(data){
 								$timeout(function(){
-									angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate({
-										width : '0%'
-									}, 400,function(){
+									angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate(animateProp, 400,function(){
 										angular.element('#'+sidePanelId).remove();
 										defer.resolve(data);
 									});
@@ -186,9 +231,7 @@
 							},
 							dismiss : function(cause){
 								$timeout(function(){
-									angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate({
-										width : '0%'
-									}, 400,function(){
+									angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate(animateProp, 400,function(){
 
 										angular.element('#'+sidePanelId).remove();
 
@@ -220,9 +263,7 @@
 					}
 					$compile(angular.element('#'+sidePanelId).contents())(ctrlDi.$scope);
 					$timeout(function(){
-						angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate({
-							width : parsedOptions.width
-						}, 400,'linear',function(){
+						angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate(animatePropFinal, 400,'linear',function(){
 						});
 					},100);
 

@@ -11,10 +11,37 @@
 }
 
 .ng-sidepanel{
+
+}
+
+.ng-sidepanel.right{
     float: right;
     top:0;
-    height: 100%;
     width: 0%;
+    height: 100%;
+    background: #FFFFFF;
+    opacity: 1;
+}
+.ng-sidepanel.left{
+    float: left;
+    top:0;
+    width: 0%;
+    height: 100%;
+    background: #FFFFFF;
+    opacity: 1;
+}
+
+.ng-sidepanel.bottom{
+    bottom:0;
+    height: 0%;
+    width: 100%;
+    background: #FFFFFF;
+    opacity: 1;
+}
+.ng-sidepanel.top{
+    top:0;
+    height: 0%;
+    width: 100%;
     background: #FFFFFF;
     opacity: 1;
 }
