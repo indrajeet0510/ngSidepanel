@@ -15,7 +15,7 @@
 				htmlString = '<div id="' +sidepanelId+ '" class="ng-sidepanel-container" '
 					+ ((controllerName) ? ('ng-controller="' +controllerName + '" ') : '') +' >'
 					+ '<div class="ng-sidepanel '+position + ' '+ ((cssClass) ? cssClass : '') +
-					'>" style="width:'+ '0%' +'"'
+					'" style="width:'+ '0%' +'">'
 					+ template
 					+ '</' + 'div>'
 					+ '</'+'div>';
@@ -24,7 +24,7 @@
 				htmlString = '<div id="' +sidepanelId+ '" class="ng-sidepanel-container" '
 					+ ((controllerName) ? ('ng-controller="' +controllerName + '" ') : '') +' >'
 					+ '<div class="ng-sidepanel '+position + ' '+ ((cssClass) ? cssClass : '') +
-					'>" style="height:'+ '0%' +'"'
+					'" style="height:'+ '0%' +'">'
 					+ template
 					+ '</' + 'div>'
 					+ '</'+'div>';
