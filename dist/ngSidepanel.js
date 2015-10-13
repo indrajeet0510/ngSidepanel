@@ -20,17 +20,17 @@
 					+ '</' + 'div>'
 					+ '</'+'div>';
 			}
-            else{
-                htmlString = '<div id="' +sidepanelId+ '" class="ng-sidepanel-container" '
-                    + ((controllerName) ? ('ng-controller="' +controllerName + '" ') : '') +' >'
-                    + '<div class="ng-sidepanel '+position + ' '+ ((cssClass) ? cssClass : '') +
-                    '>" style="height:'+ '0%' +'"'
-                    + template
-                    + '</' + 'div>'
-                    + '</'+'div>';
-            }
+			else{
+				htmlString = '<div id="' +sidepanelId+ '" class="ng-sidepanel-container" '
+					+ ((controllerName) ? ('ng-controller="' +controllerName + '" ') : '') +' >'
+					+ '<div class="ng-sidepanel '+position + ' '+ ((cssClass) ? cssClass : '') +
+					'>" style="height:'+ '0%' +'"'
+					+ template
+					+ '</' + 'div>'
+					+ '</'+'div>';
+			}
 
-            angular.element('body').append(htmlString);
+			angular.element('body').append(htmlString);
 
 			if(isVertical){
 				angular.element(window).resize(function() {
@@ -90,7 +90,7 @@
 				}
 				return defer.promise;
 			};
-	}]);
+		}]);
 
 	/**
 	 * Parses the options passed for creating sidepanel instance
@@ -104,7 +104,7 @@
 					controller : null,
 					position : 'right',
 					width : '20%',
-                    height : '90%',
+					height : '90%',
 					panelClass : '',
 					resolve : null
 				};
@@ -128,7 +128,7 @@
 					return defaultOptions;
 				}
 			};
-	}]);
+		}]);
 
 	angular.module('ngSidepanel').service('$sidepanel',[
 		'$getSidepanelTemplate',
@@ -140,45 +140,48 @@
 		'$compile',
 		'$timeout',
 		function(
-				$getSidepanelTemplate,
-				$parseSidepanelOptions,
-				$q,
-				$controller,
-				$rootScope,
-				$parseSidepanelHtml,
-				$compile,
-				$timeout
-			){
+			$getSidepanelTemplate,
+			$parseSidepanelOptions,
+			$q,
+			$controller,
+			$rootScope,
+			$parseSidepanelHtml,
+			$compile,
+			$timeout
+		){
 
 			var defer = $q.defer();
 			this.sidepanelInstance = {
 			};
 			this.open = function(panelOptions){
+				defer = $q.defer();
 				var parsedOptions = $parseSidepanelOptions(panelOptions);
-                var animateProp = { height : '0%'};
-                var animatePropFinal = { height : parsedOptions.height};
-                if(panelOptions.position == 'right' || panelOptions.position == 'left'){
-                    animateProp = { width : '0%'};
-                    animatePropFinal = { width : parsedOptions.width};
-                }
-                if(!parsedOptions.template){
+				var animateProp = { height : '0%'};
+				var animatePropFinal = { height : parsedOptions.height};
+				if(panelOptions.position == 'right' || panelOptions.position == 'left'){
+					animateProp = { width : '0%'};
+					animatePropFinal = { width : parsedOptions.width};
+				}
+				if(!parsedOptions.template){
 					$getSidepanelTemplate(parsedOptions.templateUrl).then(function(data){
 						var sidePanelId = $parseSidepanelHtml(data,parsedOptions.controller,parsedOptions.width,parsedOptions.position,parsedOptions.panelClass);
 
 
 
-                        var ctrlDi = {
+						var ctrlDi = {
 							$scope : $rootScope.$new(),
 							$sidepanelInstance : {
 								close : function(data){
-                                    angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate(animateProp, 400,function(){
+									angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate(animateProp, 400,function(){
 										angular.element('#'+sidePanelId).remove();
+										console.log(data);
 										defer.resolve(data);
 									});
 								},
 								dismiss : function(cause){
 									angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate(animateProp, 400,function(){
 										angular.element('#'+sidePanelId).remove();
+										console.log(data);
 										defer.reject(cause);
 									});
 								}
@@ -268,11 +271,12 @@
 					},100);
 
 				}
+				this.sidepanelInstance.result = defer.promise;
 				return this.sidepanelInstance;
 			};
-			
-			this.sidepanelInstance.result = defer.promise;
-	}]);
+
+
+		}]);
 
 })();
 
