@@ -75,14 +75,28 @@
 				var defer = $q.defer();
 				var template = $templateCache.get(templateUrl);
 				if(template){
+					var tempString = template;
+					if(typeof(template) === 'string'){
+
+					}
+					else{
+						tempString = template[1];
+					}
 					$timeout(function(){
-						return defer.resolve(template)
+						return defer.resolve(tempString)
 					},10);
 				}
 				else{
 					$templateRequest(templateUrl).then(function(data){
-						$templateCache.put(templateUrl,data);
-						defer.resolve(data);
+						var tempString = data;
+						if(typeof(template) === 'string'){
+
+						}
+						else{
+							tempString = template[1];
+						}
+						$templateCache.put(templateUrl,tempString);
+						defer.resolve(tempString);
 					},function(err){
 						console.error(err);
 						defer.reject('Template Not found');
