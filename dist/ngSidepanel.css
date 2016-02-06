@@ -1,7 +1,3 @@
-.ng-sidepanel-container.row{
-    margin-left: -15px;
-    margin-right: -15px;
-}
 .ng-sidepanel-container{
     position: absolute;
     top:0;
@@ -25,7 +21,6 @@
     height: 100%;
     background: #FFFFFF;
     opacity: 1;
-    overflow-x: hidden;
 }
 .ng-sidepanel.left{
     float: left;
@@ -34,7 +29,6 @@
     height: 100%;
     background: #FFFFFF;
     opacity: 1;
-    overflow-x: hidden;
 }
 
 .ng-sidepanel.bottom{
@@ -50,5 +44,4 @@
     width: 100%;
     background: #FFFFFF;
     opacity: 1;
-    overflow-y : scroll;
 }
