@@ -12,9 +12,9 @@
 			var isVertical = false;
 			if(position == 'left' || position == 'right'){
 				isVertical = true;
-				htmlString = '<div id="' +sidepanelId+ '" class="ng-sidepanel-container" '
+				htmlString = '<div id="' +sidepanelId+ '" class="ng-sidepanel-container"'
 					+ ((controllerName) ? ('ng-controller="' +controllerName + '" ') : '') +' >'
-					+ '<div class="ng-sidepanel '+position + ' '+ ((cssClass) ? cssClass : '') +
+					+ '<div stop-event="click"  class="ng-sidepanel '+position + ' '+ ((cssClass) ? cssClass : '') +
 					'" style="width:'+ '0%' +'">'
 					+ template
 					+ '</' + 'div>'
@@ -23,14 +23,14 @@
 			else{
 				htmlString = '<div id="' +sidepanelId+ '" class="ng-sidepanel-container" '
 					+ ((controllerName) ? ('ng-controller="' +controllerName + '" ') : '') +' >'
-					+ '<div class="ng-sidepanel '+position + ' '+ ((cssClass) ? cssClass : '') +
+					+ '<div stop-event="click"  class="ng-sidepanel '+position + ' '+ ((cssClass) ? cssClass : '') +
 					'" style="height:'+ '0%' +'">'
 					+ template
 					+ '</' + 'div>'
 					+ '</'+'div>';
 			}
 
-			angular.element('body').append(htmlString);
+			angular.element('[ng-app]').append(htmlString);
 
 			if(isVertical){
 				angular.element(window).resize(function() {
@@ -74,12 +74,6 @@
 			return function(templateUrl){
 				var defer = $q.defer();
 				var template = $templateCache.get(templateUrl);
-				if(template){
-					$timeout(function(){
-						return defer.resolve(template)
-					},10);
-				}
-				else{
 					$templateRequest(templateUrl).then(function(data){
 						$templateCache.put(templateUrl,data);
 						defer.resolve(data);
@@ -87,7 +81,7 @@
 						console.error(err);
 						defer.reject('Template Not found');
 					});
-				}
+
 				return defer.promise;
 			};
 		}]);
@@ -173,15 +167,14 @@
 							$sidepanelInstance : {
 								close : function(data){
 									angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate(animateProp, 400,function(){
+										ctrlDi.$scope.$destroy();
 										angular.element('#'+sidePanelId).remove();
-										console.log(data);
 										defer.resolve(data);
 									});
 								},
 								dismiss : function(cause){
 									angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate(animateProp, 400,function(){
 										angular.element('#'+sidePanelId).remove();
-										console.log(data);
 										defer.reject(cause);
 									});
 								}
@@ -205,6 +198,15 @@
 						$compile(angular.element('#'+sidePanelId).contents())(ctrlDi.$scope);
 						$timeout(function(){
 							angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate(animatePropFinal, 400,function(){
+								$timeout(function(){
+									angular.element('#'+sidePanelId).bind('click',function(){
+										angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate(animateProp, 400,function(){
+											ctrlDi.$scope.$destroy(); defer.reject();
+											angular.element('#'+sidePanelId).remove();
+										});
+									});
+
+								},100);
 							});
 						},200);
 
@@ -225,6 +227,7 @@
 							close : function(data){
 								$timeout(function(){
 									angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate(animateProp, 400,function(){
+										ctrlDi.$scope.$destroy();
 										angular.element('#'+sidePanelId).remove();
 										defer.resolve(data);
 									});
@@ -235,9 +238,8 @@
 							dismiss : function(cause){
 								$timeout(function(){
 									angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate(animateProp, 400,function(){
-
+										ctrlDi.$scope.$destroy();
 										angular.element('#'+sidePanelId).remove();
-
 										defer.reject(cause);
 									});
 								},100);
@@ -267,6 +269,15 @@
 					$compile(angular.element('#'+sidePanelId).contents())(ctrlDi.$scope);
 					$timeout(function(){
 						angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate(animatePropFinal, 400,'linear',function(){
+							$timeout(function(){
+								angular.element('#'+sidePanelId).bind('click',function(){
+									angular.element('#'+sidePanelId + ' > .ng-sidepanel').animate(animateProp, 400,function(){
+										ctrlDi.$scope.$destroy(); defer.reject();
+										angular.element('#'+sidePanelId).remove();
+									});
+								});
+
+							},100);
 						});
 					},100);
 
